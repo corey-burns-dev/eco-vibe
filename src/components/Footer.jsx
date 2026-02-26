@@ -28,15 +28,22 @@ function Footer() {
             Eco<span className="text-fern-300">Vibe</span>
           </div>
           <p className="max-w-xs text-sm leading-relaxed text-forest-200">
-            Thoughtfully designed essentials for low-waste homes and better daily habits.
+            Thoughtfully designed essentials for low-waste homes and better
+            daily habits.
           </p>
         </div>
 
         <div>
-          <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-forest-300">Shop</h4>
+          <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-forest-300">
+            Shop
+          </h4>
           <div className="space-y-3 text-sm text-forest-200">
             {shopLinks.map((item) => (
-              <Link key={item.label} to={item.to} className="block transition hover:text-sand-50">
+              <Link
+                key={item.label}
+                to={item.to}
+                className="block transition hover:text-sand-50"
+              >
                 {item.label}
               </Link>
             ))}
@@ -44,10 +51,16 @@ function Footer() {
         </div>
 
         <div>
-          <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-forest-300">About</h4>
+          <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-forest-300">
+            About
+          </h4>
           <div className="space-y-3 text-sm text-forest-200">
             {aboutLinks.map((item) => (
-              <Link key={item.label} to={item.to} className="block transition hover:text-sand-50">
+              <Link
+                key={item.label}
+                to={item.to}
+                className="block transition hover:text-sand-50"
+              >
                 {item.label}
               </Link>
             ))}
@@ -55,15 +68,23 @@ function Footer() {
         </div>
 
         <div>
-          <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-forest-300">Newsletter</h4>
-          <p className="mb-4 text-sm text-forest-200">Monthly tips, practical swaps, and new product stories.</p>
+          <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-forest-300">
+            Newsletter
+          </h4>
+          <p className="mb-4 text-sm text-forest-200">
+            Monthly tips, practical swaps, and new product stories.
+          </p>
           <label className="flex items-center gap-2 border-b border-forest-600 pb-2">
             <input
               type="email"
               placeholder="Email Address"
               className="w-full bg-transparent text-sm text-sand-50 placeholder:text-forest-400 focus:outline-none"
             />
-            <button type="button" className="text-forest-300 transition hover:text-sand-50" aria-label="Subscribe">
+            <button
+              type="button"
+              className="text-forest-300 transition hover:text-sand-50"
+              aria-label="Subscribe"
+            >
               <ArrowRight size={17} />
             </button>
           </label>
@@ -71,12 +92,20 @@ function Footer() {
       </div>
 
       <div className="relative mx-auto flex max-w-7xl flex-col items-start justify-between gap-4 pt-8 font-sans text-[11px] uppercase tracking-[0.18em] text-forest-300 md:flex-row md:items-center">
-        <p>Copyright {new Date().getFullYear()} EcoVibe. All rights reserved.</p>
+        <p>
+          Copyright {new Date().getFullYear()} EcoVibe. All rights reserved.
+        </p>
         <div className="flex gap-4">
-          <a href="https://instagram.com" className="transition hover:text-sand-50">
+          <a
+            href="https://instagram.com"
+            className="transition hover:text-sand-50"
+          >
             Instagram
           </a>
-          <a href="https://pinterest.com" className="transition hover:text-sand-50">
+          <a
+            href="https://pinterest.com"
+            className="transition hover:text-sand-50"
+          >
             Pinterest
           </a>
           <a href="https://x.com" className="transition hover:text-sand-50">

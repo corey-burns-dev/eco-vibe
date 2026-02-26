@@ -6,9 +6,15 @@ function Header({ eyebrow, title, description, image, imageAlt }) {
 
       <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-2">
         <div className="reveal-up">
-          <p className="mb-4 font-sans text-xs font-semibold uppercase tracking-[0.26em] text-clay-700">{eyebrow}</p>
-          <h1 className="mb-5 max-w-xl text-5xl font-light leading-tight text-forest-900 md:text-6xl">{title}</h1>
-          <p className="max-w-xl font-sans text-lg leading-relaxed text-forest-600">{description}</p>
+          <p className="mb-4 font-sans text-xs font-semibold uppercase tracking-[0.26em] text-clay-700">
+            {eyebrow}
+          </p>
+          <h1 className="mb-5 max-w-xl text-5xl font-light leading-tight text-forest-900 md:text-6xl">
+            {title}
+          </h1>
+          <p className="max-w-xl font-sans text-lg leading-relaxed text-forest-600">
+            {description}
+          </p>
         </div>
 
         <div className="relative reveal-up [animation-delay:140ms]">

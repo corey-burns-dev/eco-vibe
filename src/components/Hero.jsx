@@ -20,7 +20,8 @@ function Hero() {
             <span className="block italic text-fern-600">the earth.</span>
           </h1>
           <p className="mb-10 max-w-lg font-sans text-lg leading-relaxed text-forest-600">
-            Curated essentials crafted from renewable materials. Less waste, more intention, and design that feels as good as it looks.
+            Curated essentials crafted from renewable materials. Less waste,
+            more intention, and design that feels as good as it looks.
           </p>
 
           <div className="mb-14 flex flex-wrap gap-4">
@@ -29,7 +30,10 @@ function Hero() {
               className="group inline-flex items-center gap-3 rounded-full bg-forest-900 px-7 py-3.5 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-sand-50 transition hover:bg-fern-600"
             >
               Start Shopping
-              <ArrowRight size={17} className="transition-transform group-hover:translate-x-1" />
+              <ArrowRight
+                size={17}
+                className="transition-transform group-hover:translate-x-1"
+              />
             </Link>
             <Link
               to="/mission"
@@ -72,8 +76,12 @@ function Hero() {
                 <Leaf size={21} />
               </div>
               <div>
-                <p className="font-sans text-[10px] uppercase tracking-[0.18em] text-forest-500">Impact</p>
-                <p className="text-lg font-medium text-forest-900">10,000+ Trees Planted</p>
+                <p className="font-sans text-[10px] uppercase tracking-[0.18em] text-forest-500">
+                  Impact
+                </p>
+                <p className="text-lg font-medium text-forest-900">
+                  10,000+ Trees Planted
+                </p>
               </div>
             </div>
           </div>

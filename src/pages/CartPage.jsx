@@ -4,7 +4,8 @@ import { useCart } from '../context/useCart.js';
 import { formatUSD } from '../utils/format.js';
 
 function CartPage() {
-  const { lineItems, itemCount, subtotal, updateQuantity, removeFromCart } = useCart();
+  const { lineItems, itemCount, subtotal, updateQuantity, removeFromCart } =
+    useCart();
 
   const shipping = subtotal > 0 && subtotal < 75 ? 7 : 0;
   const tax = subtotal * 0.08;
@@ -14,9 +15,15 @@ function CartPage() {
     return (
       <section className="px-5 py-20 md:px-10">
         <div className="mx-auto max-w-3xl rounded-3xl border border-sand-200 bg-sand-100 p-8 text-center">
-          <p className="mb-3 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-clay-700">Cart</p>
-          <h1 className="mb-4 text-5xl font-light text-forest-900">Your bag is empty.</h1>
-          <p className="mb-7 font-sans text-forest-600">Browse products and add a few low-waste essentials to get started.</p>
+          <p className="mb-3 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-clay-700">
+            Cart
+          </p>
+          <h1 className="mb-4 text-5xl font-light text-forest-900">
+            Your bag is empty.
+          </h1>
+          <p className="mb-7 font-sans text-forest-600">
+            Browse products and add a few low-waste essentials to get started.
+          </p>
           <Link
             to="/shop"
             className="inline-flex items-center gap-2 rounded-full bg-forest-900 px-6 py-3 font-sans text-xs font-semibold uppercase tracking-[0.18em] text-sand-50"
@@ -32,13 +39,18 @@ function CartPage() {
   return (
     <section className="px-5 py-12 md:px-10 md:py-16">
       <div className="mx-auto max-w-7xl">
-        <p className="mb-3 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-clay-700">Cart</p>
+        <p className="mb-3 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-clay-700">
+          Cart
+        </p>
         <h1 className="mb-8 text-6xl font-light text-forest-900">Your Bag</h1>
 
         <div className="grid gap-7 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="space-y-4">
             {lineItems.map((item) => (
-              <article key={item.productId} className="rounded-3xl border border-sand-200 bg-sand-100 p-4 md:p-5">
+              <article
+                key={item.productId}
+                className="rounded-3xl border border-sand-200 bg-sand-100 p-4 md:p-5"
+              >
                 <div className="grid gap-4 sm:grid-cols-[120px_1fr]">
                   <img
                     src={item.product.image}
@@ -49,13 +61,21 @@ function CartPage() {
                   <div>
                     <div className="mb-3 flex items-start justify-between gap-3">
                       <div>
-                        <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-forest-500">{item.product.category}</p>
-                        <h2 className="text-3xl font-light leading-tight text-forest-900">{item.product.name}</h2>
+                        <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-forest-500">
+                          {item.product.category}
+                        </p>
+                        <h2 className="text-3xl font-light leading-tight text-forest-900">
+                          {item.product.name}
+                        </h2>
                       </div>
-                      <p className="font-sans text-sm font-semibold text-forest-800">{formatUSD(item.subtotal)}</p>
+                      <p className="font-sans text-sm font-semibold text-forest-800">
+                        {formatUSD(item.subtotal)}
+                      </p>
                     </div>
 
-                    <p className="mb-4 font-sans text-sm text-forest-600">{item.product.description}</p>
+                    <p className="mb-4 font-sans text-sm text-forest-600">
+                      {item.product.description}
+                    </p>
 
                     <div className="flex items-center justify-between gap-3">
                       <div className="flex items-center gap-1 rounded-full border border-sand-300 bg-sand-50 p-1">
@@ -63,16 +83,22 @@ function CartPage() {
                           type="button"
                           className="rounded-full p-1.5 text-forest-700 transition hover:bg-sand-200"
                           aria-label={`Decrease ${item.product.name} quantity`}
-                          onClick={() => updateQuantity(item.productId, item.quantity - 1)}
+                          onClick={() =>
+                            updateQuantity(item.productId, item.quantity - 1)
+                          }
                         >
                           <Minus size={14} />
                         </button>
-                        <span className="min-w-7 text-center font-sans text-sm font-semibold text-forest-700">{item.quantity}</span>
+                        <span className="min-w-7 text-center font-sans text-sm font-semibold text-forest-700">
+                          {item.quantity}
+                        </span>
                         <button
                           type="button"
                           className="rounded-full p-1.5 text-forest-700 transition hover:bg-sand-200"
                           aria-label={`Increase ${item.product.name} quantity`}
-                          onClick={() => updateQuantity(item.productId, item.quantity + 1)}
+                          onClick={() =>
+                            updateQuantity(item.productId, item.quantity + 1)
+                          }
                         >
                           <Plus size={14} />
                         </button>
@@ -94,7 +120,9 @@ function CartPage() {
           </div>
 
           <aside className="h-fit rounded-3xl border border-sand-200 bg-sand-100 p-5">
-            <h2 className="mb-4 text-4xl font-light text-forest-900">Order Summary</h2>
+            <h2 className="mb-4 text-4xl font-light text-forest-900">
+              Order Summary
+            </h2>
             <div className="space-y-3 font-sans text-sm text-forest-700">
               <div className="flex items-center justify-between">
                 <span>{itemCount} items</span>

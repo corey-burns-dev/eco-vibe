@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -24,10 +24,14 @@ body {
   margin: 0;
   background:
     radial-gradient(circle at 8% 0%, rgba(185, 211, 172, 0.24), transparent 40%),
-    radial-gradient(circle at 92% 30%, rgba(215, 145, 112, 0.2), transparent 45%),
+    radial-gradient(
+      circle at 92% 30%,
+      rgba(215, 145, 112, 0.2),
+      transparent 45%
+    ),
     var(--sand-50);
   color: var(--forest-900);
-  font-family: 'Cormorant Garamond', serif;
+  font-family: "Cormorant Garamond", serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

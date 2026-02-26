@@ -11,7 +11,10 @@ function ShopPage() {
   const [sortBy, setSortBy] = useState('featured');
   const { addToCart, openCart } = useCart();
 
-  const categories = useMemo(() => ['All', ...new Set(products.map((product) => product.category))], []);
+  const categories = useMemo(
+    () => ['All', ...new Set(products.map((product) => product.category))],
+    [],
+  );
 
   const filteredProducts = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -19,7 +22,9 @@ function ShopPage() {
     let list = products.filter((product) => {
       const matchCategory = category === 'All' || product.category === category;
       const matchQuery = normalized.length
-        ? `${product.name} ${product.description} ${product.category}`.toLowerCase().includes(normalized)
+        ? `${product.name} ${product.description} ${product.category}`
+            .toLowerCase()
+            .includes(normalized)
         : true;
 
       return matchCategory && matchQuery;
@@ -32,7 +37,9 @@ function ShopPage() {
     } else if (sortBy === 'name') {
       list = [...list].sort((a, b) => a.name.localeCompare(b.name));
     } else {
-      list = [...list].sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)));
+      list = [...list].sort(
+        (a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)),
+      );
     }
 
     return list;
@@ -82,7 +89,9 @@ function ShopPage() {
               </select>
             </label>
 
-            <p className="font-sans text-xs uppercase tracking-[0.2em] text-forest-500">{filteredProducts.length} items</p>
+            <p className="font-sans text-xs uppercase tracking-[0.2em] text-forest-500">
+              {filteredProducts.length} items
+            </p>
           </div>
 
           <div className="mb-8 flex flex-wrap gap-2">
@@ -104,7 +113,11 @@ function ShopPage() {
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filteredProducts.map((product, index) => (
-              <div key={product.id} className="reveal-up" style={{ animationDelay: `${index * 40}ms` }}>
+              <div
+                key={product.id}
+                className="reveal-up"
+                style={{ animationDelay: `${index * 40}ms` }}
+              >
                 <ProductCard product={product} onAddToCart={handleAddToCart} />
               </div>
             ))}

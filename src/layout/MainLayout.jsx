@@ -1,7 +1,7 @@
+import { Outlet } from 'react-router-dom';
 import CartDrawer from '../components/CartDrawer.jsx';
 import Footer from '../components/Footer.jsx';
 import Navigation from '../components/Navigation.jsx';
-import { Outlet } from 'react-router-dom';
 
 function MainLayout() {
   return (

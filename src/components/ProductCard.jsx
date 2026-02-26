@@ -22,13 +22,20 @@ function ProductCard({ product, compact = false, onAddToCart }) {
       <div className="px-2 pb-1 pt-4">
         <div className="mb-2 flex items-start justify-between gap-3">
           <h3 className="text-2xl font-medium leading-tight text-forest-900">
-            <Link to={`/shop/${product.id}`} className="transition hover:text-fern-700">
+            <Link
+              to={`/shop/${product.id}`}
+              className="transition hover:text-fern-700"
+            >
               {product.name}
             </Link>
           </h3>
-          <p className="font-sans text-sm font-semibold text-forest-700">{formatUSD(product.price)}</p>
+          <p className="font-sans text-sm font-semibold text-forest-700">
+            {formatUSD(product.price)}
+          </p>
         </div>
-        <p className="mb-4 font-sans text-sm leading-relaxed text-forest-600">{product.description}</p>
+        <p className="mb-4 font-sans text-sm leading-relaxed text-forest-600">
+          {product.description}
+        </p>
 
         <div className="flex items-center justify-between gap-3">
           <button

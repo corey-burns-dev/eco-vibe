@@ -32,13 +32,20 @@ function Navigation() {
 
         <div className="hidden items-center gap-8 md:flex">
           {links.map((link) => (
-            <NavLink key={link.to} to={link.to} className={({ isActive }) => navClass(isActive)}>
+            <NavLink
+              key={link.to}
+              to={link.to}
+              className={({ isActive }) => navClass(isActive)}
+            >
               {link.label}
             </NavLink>
           ))}
         </div>
 
-        <NavLink to="/" className="flex items-center gap-2 text-3xl font-medium tracking-tight text-forest-900">
+        <NavLink
+          to="/"
+          className="flex items-center gap-2 text-3xl font-medium tracking-tight text-forest-900"
+        >
           <Leaf className="text-fern-500" size={27} />
           Eco<span className="text-fern-600">Vibe</span>
         </NavLink>

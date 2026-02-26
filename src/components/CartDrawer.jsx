@@ -49,8 +49,12 @@ function CartDrawer() {
 
         {lineItems.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
-            <p className="mb-3 text-4xl font-light text-forest-900">Your bag is empty</p>
-            <p className="mb-6 font-sans text-sm text-forest-600">Add a few low-waste essentials to get started.</p>
+            <p className="mb-3 text-4xl font-light text-forest-900">
+              Your bag is empty
+            </p>
+            <p className="mb-6 font-sans text-sm text-forest-600">
+              Add a few low-waste essentials to get started.
+            </p>
             <Link
               to="/shop"
               className="rounded-full bg-forest-900 px-6 py-3 font-sans text-xs font-semibold uppercase tracking-[0.18em] text-sand-50"
@@ -63,7 +67,10 @@ function CartDrawer() {
           <>
             <div className="flex-1 space-y-4 overflow-y-auto p-5">
               {lineItems.map((item) => (
-                <article key={item.productId} className="rounded-2xl border border-sand-200 bg-sand-100 p-3">
+                <article
+                  key={item.productId}
+                  className="rounded-2xl border border-sand-200 bg-sand-100 p-3"
+                >
                   <div className="mb-3 flex gap-3">
                     <img
                       src={item.product.image}
@@ -72,9 +79,15 @@ function CartDrawer() {
                       loading="lazy"
                     />
                     <div className="min-w-0 flex-1">
-                      <h3 className="text-2xl font-medium leading-tight text-forest-900">{item.product.name}</h3>
-                      <p className="mt-1 font-sans text-xs uppercase tracking-[0.17em] text-forest-500">{item.product.category}</p>
-                      <p className="mt-2 font-sans text-sm font-semibold text-forest-700">{formatUSD(item.product.price)}</p>
+                      <h3 className="text-2xl font-medium leading-tight text-forest-900">
+                        {item.product.name}
+                      </h3>
+                      <p className="mt-1 font-sans text-xs uppercase tracking-[0.17em] text-forest-500">
+                        {item.product.category}
+                      </p>
+                      <p className="mt-2 font-sans text-sm font-semibold text-forest-700">
+                        {formatUSD(item.product.price)}
+                      </p>
                     </div>
                   </div>
 
@@ -84,23 +97,31 @@ function CartDrawer() {
                         type="button"
                         className="rounded-full p-1.5 text-forest-700 transition hover:bg-sand-200"
                         aria-label={`Decrease ${item.product.name} quantity`}
-                        onClick={() => updateQuantity(item.productId, item.quantity - 1)}
+                        onClick={() =>
+                          updateQuantity(item.productId, item.quantity - 1)
+                        }
                       >
                         <Minus size={14} />
                       </button>
-                      <span className="min-w-7 text-center font-sans text-sm font-semibold text-forest-700">{item.quantity}</span>
+                      <span className="min-w-7 text-center font-sans text-sm font-semibold text-forest-700">
+                        {item.quantity}
+                      </span>
                       <button
                         type="button"
                         className="rounded-full p-1.5 text-forest-700 transition hover:bg-sand-200"
                         aria-label={`Increase ${item.product.name} quantity`}
-                        onClick={() => updateQuantity(item.productId, item.quantity + 1)}
+                        onClick={() =>
+                          updateQuantity(item.productId, item.quantity + 1)
+                        }
                       >
                         <Plus size={14} />
                       </button>
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <p className="font-sans text-sm font-semibold text-forest-800">{formatUSD(item.subtotal)}</p>
+                      <p className="font-sans text-sm font-semibold text-forest-800">
+                        {formatUSD(item.subtotal)}
+                      </p>
                       <button
                         type="button"
                         className="rounded-full p-1.5 text-forest-500 transition hover:bg-sand-200 hover:text-clay-700"
@@ -117,8 +138,12 @@ function CartDrawer() {
 
             <footer className="border-t border-sand-200 p-5">
               <div className="mb-4 flex items-center justify-between font-sans">
-                <p className="text-xs uppercase tracking-[0.18em] text-forest-600">{itemCount} items</p>
-                <p className="text-lg font-semibold text-forest-900">{formatUSD(subtotal)}</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-forest-600">
+                  {itemCount} items
+                </p>
+                <p className="text-lg font-semibold text-forest-900">
+                  {formatUSD(subtotal)}
+                </p>
               </div>
 
               <Link

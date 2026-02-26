@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import CartContext from './cart-context.js';
 import { products } from '../data/products.js';
+import CartContext from './cart-context.js';
 
 const CART_STORAGE_KEY = 'eco-vibe-cart-v1';
 
@@ -10,7 +10,9 @@ function loadStoredCart() {
   }
 
   try {
-    const parsed = JSON.parse(window.localStorage.getItem(CART_STORAGE_KEY) ?? '[]');
+    const parsed = JSON.parse(
+      window.localStorage.getItem(CART_STORAGE_KEY) ?? '[]',
+    );
 
     if (!Array.isArray(parsed)) {
       return [];
@@ -66,7 +68,9 @@ export function CartProvider({ children }) {
 
   function addToCart(productId, quantity = 1) {
     const resolvedId = Number(productId);
-    const resolvedQuantity = Number.isFinite(Number(quantity)) ? Math.max(1, Math.floor(Number(quantity))) : 1;
+    const resolvedQuantity = Number.isFinite(Number(quantity))
+      ? Math.max(1, Math.floor(Number(quantity)))
+      : 1;
 
     if (!products.some((product) => product.id === resolvedId)) {
       return;
@@ -76,7 +80,10 @@ export function CartProvider({ children }) {
       const existing = current.find((item) => item.productId === resolvedId);
 
       if (!existing) {
-        return [...current, { productId: resolvedId, quantity: resolvedQuantity }];
+        return [
+          ...current,
+          { productId: resolvedId, quantity: resolvedQuantity },
+        ];
       }
 
       return current.map((item) =>
@@ -92,20 +99,26 @@ export function CartProvider({ children }) {
     const resolvedQuantity = Math.floor(Number(quantity));
 
     if (resolvedQuantity <= 0 || !Number.isFinite(resolvedQuantity)) {
-      setCart((current) => current.filter((item) => item.productId !== resolvedId));
+      setCart((current) =>
+        current.filter((item) => item.productId !== resolvedId),
+      );
       return;
     }
 
     setCart((current) =>
       current.map((item) =>
-        item.productId === resolvedId ? { ...item, quantity: resolvedQuantity } : item,
+        item.productId === resolvedId
+          ? { ...item, quantity: resolvedQuantity }
+          : item,
       ),
     );
   }
 
   function removeFromCart(productId) {
     const resolvedId = Number(productId);
-    setCart((current) => current.filter((item) => item.productId !== resolvedId));
+    setCart((current) =>
+      current.filter((item) => item.productId !== resolvedId),
+    );
   }
 
   function clearCart() {

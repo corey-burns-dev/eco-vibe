@@ -5,10 +5,16 @@ import { journalPosts } from '../data/journal.js';
 
 function JournalPage() {
   const [activeTopic, setActiveTopic] = useState('All');
-  const topics = useMemo(() => ['All', ...new Set(journalPosts.map((post) => post.topic))], []);
+  const topics = useMemo(
+    () => ['All', ...new Set(journalPosts.map((post) => post.topic))],
+    [],
+  );
 
   const visiblePosts = useMemo(
-    () => journalPosts.filter((post) => activeTopic === 'All' || post.topic === activeTopic),
+    () =>
+      journalPosts.filter(
+        (post) => activeTopic === 'All' || post.topic === activeTopic,
+      ),
     [activeTopic],
   );
 
@@ -61,10 +67,16 @@ function JournalPage() {
                     <span>{post.topic}</span>
                     <span>{post.readTime}</span>
                   </div>
-                  <h2 className="mb-3 text-3xl font-light leading-tight text-forest-900">{post.title}</h2>
-                  <p className="mb-5 font-sans text-sm leading-relaxed text-forest-600">{post.excerpt}</p>
+                  <h2 className="mb-3 text-3xl font-light leading-tight text-forest-900">
+                    {post.title}
+                  </h2>
+                  <p className="mb-5 font-sans text-sm leading-relaxed text-forest-600">
+                    {post.excerpt}
+                  </p>
                   <div className="flex items-center justify-between">
-                    <p className="font-sans text-xs uppercase tracking-[0.18em] text-clay-700">{post.date}</p>
+                    <p className="font-sans text-xs uppercase tracking-[0.18em] text-clay-700">
+                      {post.date}
+                    </p>
                     <button
                       type="button"
                       className="inline-flex items-center gap-1 font-sans text-xs font-semibold uppercase tracking-[0.18em] text-forest-700 transition group-hover:text-fern-700"
