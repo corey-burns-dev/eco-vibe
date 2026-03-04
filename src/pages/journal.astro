@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import JournalGrid from '../components/JournalGrid.jsx';
+import { journalPosts } from '../data/journal.js';
+
+const topics = ['All', ...new Set(journalPosts.map((post) => post.topic))];
+---
+
+<BaseLayout title="Journal | Eco Vibe" description="Stories, Guides, and Progress Notes">
+  <Header
+    eyebrow="Journal"
+    title="Stories, Guides, and Progress Notes"
+    description="Explore practical sustainability guides, transparent sourcing updates, and field notes from our design and supplier teams."
+    image="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1400&q=80"
+    imageAlt="Notebook and cup on desk"
+  />
+
+  <section className="px-5 py-14 md:px-10 md:py-16">
+    <JournalGrid topics={topics} client:load />
+  </section>
+</BaseLayout>

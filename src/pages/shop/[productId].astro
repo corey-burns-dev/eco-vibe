@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../../components/ProductCard.jsx';
+import { products } from '../../data/products.js';
+import { formatUSD } from '../../utils/format.js';
+import { ArrowLeft, Minus, Plus } from 'lucide-react';
+import ProductDetailActions from '../../components/ProductDetailActions.jsx';
+
+export async function getStaticPaths() {
+  return products.map((product) => ({
+    params: { productId: product.id.toString() },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+
+const benefitsByCategory = {
+  Kitchen: [
+    'Ideal for meal prep and lunch packing',
+    'Safe materials made for repeat daily use',
+    'Pairs with reusable storage and cleaning kits',
+  ],
+  Lifestyle: [
+    'Designed for long-term durability',
+    'Lightweight and easy to carry daily',
+    'Crafted with low-impact fibers',
+  ],
+  Travel: [
+    'Built to reduce disposable travel waste',
+    'Compact profile for on-the-go routines',
+    'Ready for commutes and weekend trips',
+  ],
+  Cleaning: [
+    'Helps replace single-use wipes and plastics',
+    'Works with refill and concentrate systems',
+    'Easy to maintain between uses',
+  ],
+  'Personal Care': [
+    'Gentle on skin and daily routines',
+    'Plastic-free alternatives to common disposables',
+    'Minimal packaging and recyclable materials',
+  ],
+  Home: [
+    'Timeless styling to reduce replacement cycles',
+    'Comfort-first construction and quality materials',
+    'Low-impact production and finishing',
+  ],
+};
+
+const benefits = benefitsByCategory[product.category] ?? [
+  'Curated for durability and repeat use',
+  'Made to simplify low-waste routines',
+  'Designed with practical everyday function',
+];
+
+const relatedProducts = products
+  .filter((entry) => entry.id !== product.id)
+  .sort(
+    (a, b) =>
+      Number(a.category !== product.category) -
+      Number(b.category !== product.category),
+  )
+  .slice(0, 3);
+---
+
+<BaseLayout title={`${product.name} | Eco Vibe`}>
+  <section className="px-5 py-12 md:px-10 md:py-16">
+    <div className="mx-auto max-w-7xl">
+      <a
+        href="/shop"
+        className="mb-8 inline-flex items-center gap-2 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-forest-600 transition hover:text-forest-900"
+      >
+        <ArrowLeft size={14} />
+        Back to Shop
+      </a>
+
+      <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="overflow-hidden rounded-[2.2rem] border border-sand-200 bg-sand-100 p-3">
+          <img
+            src={product.image}
+            alt={product.name}
+            width={800}
+            height={600}
+            className="aspect-[4/3] w-full rounded-[1.7rem] object-cover"
+          />
+        </div>
+
+        <div>
+          <p className="mb-3 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-clay-700">
+            {product.category}
+          </p>
+          <h1 className="mb-4 text-6xl font-light leading-[1.02] text-forest-900">
+            {product.name}
+          </h1>
+          <p className="mb-4 font-sans text-2xl font-semibold text-forest-800">
+            {formatUSD(product.price)}
+          </p>
+          <p className="mb-8 max-w-xl font-sans text-base leading-relaxed text-forest-600">
+            {product.description}
+          </p>
+
+          <ProductDetailActions product={product} client:load />
+
+          <div className="rounded-3xl border border-sand-200 bg-sand-100 p-5">
+            <h2 className="mb-3 text-3xl font-light text-forest-900">
+              Why you will love it
+            </h2>
+            <ul className="space-y-2 font-sans text-sm text-forest-700">
+              {benefits.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section className="border-t border-sand-200 bg-sand-100 px-5 py-14 md:px-10 md:py-16">
+    <div className="mx-auto max-w-7xl">
+      <h2 className="mb-7 text-5xl font-light text-forest-900">
+        You May Also Like
+      </h2>
+      <div className="grid gap-6 md:grid-cols-3">
+        {relatedProducts.map((entry, index) => (
+          <div
+            className="reveal-up"
+            style={`animation-delay: ${80 + index * 60}ms`}
+          >
+            <ProductCard
+              product={entry}
+              compact
+              client:visible
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

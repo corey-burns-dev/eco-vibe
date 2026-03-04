@@ -1,35 +1,39 @@
+import { useStore } from '@nanostores/react';
 import { Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { useCart } from '../context/useCart.js';
+import { 
+  cart, 
+  isCartOpen, 
+  lineItems as lineItemsStore, 
+  itemCount as itemCountStore, 
+  subtotal as subtotalStore,
+  closeCart,
+  updateQuantity,
+  removeFromCart,
+  clearCart
+} from '../store/cart.js';
 import { formatUSD } from '../utils/format.js';
 
 function CartDrawer() {
-  const {
-    lineItems,
-    itemCount,
-    subtotal,
-    isCartOpen,
-    closeCart,
-    updateQuantity,
-    removeFromCart,
-    clearCart,
-  } = useCart();
+  const $isCartOpen = useStore(isCartOpen);
+  const $lineItems = useStore(lineItemsStore);
+  const $itemCount = useStore(itemCountStore);
+  const $subtotal = useStore(subtotalStore);
 
   return (
     <div
-      className={`fixed inset-0 z-[60] transition ${isCartOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
-      aria-hidden={!isCartOpen}
+      className={`fixed inset-0 z-[60] transition ${$isCartOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
+      aria-hidden={!$isCartOpen}
     >
       <button
         type="button"
-        className={`absolute inset-0 bg-forest-900/45 transition ${isCartOpen ? 'opacity-100' : 'opacity-0'}`}
+        className={`absolute inset-0 bg-forest-900/45 transition ${$isCartOpen ? 'opacity-100' : 'opacity-0'}`}
         aria-label="Close cart"
         onClick={closeCart}
       />
 
       <aside
         className={`absolute right-0 top-0 flex h-full w-full max-w-md flex-col border-l border-sand-200 bg-sand-50 shadow-2xl transition-transform duration-300 ${
-          isCartOpen ? 'translate-x-0' : 'translate-x-full'
+          $isCartOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         <header className="flex items-center justify-between border-b border-sand-200 px-5 py-4">
@@ -47,7 +51,7 @@ function CartDrawer() {
           </button>
         </header>
 
-        {lineItems.length === 0 ? (
+        {$lineItems.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
             <p className="mb-3 text-4xl font-light text-forest-900">
               Your bag is empty
@@ -55,18 +59,18 @@ function CartDrawer() {
             <p className="mb-6 font-sans text-sm text-forest-600">
               Add a few low-waste essentials to get started.
             </p>
-            <Link
-              to="/shop"
+            <a
+              href="/shop"
               className="rounded-full bg-forest-900 px-6 py-3 font-sans text-xs font-semibold uppercase tracking-[0.18em] text-sand-50"
               onClick={closeCart}
             >
               Browse Shop
-            </Link>
+            </a>
           </div>
         ) : (
           <>
             <div className="flex-1 space-y-4 overflow-y-auto p-5">
-              {lineItems.map((item) => (
+              {$lineItems.map((item) => (
                 <article
                   key={item.productId}
                   className="rounded-2xl border border-sand-200 bg-sand-100 p-3"
@@ -75,6 +79,8 @@ function CartDrawer() {
                     <img
                       src={item.product.image}
                       alt={item.product.name}
+                      width={80}
+                      height={80}
                       className="h-20 w-20 rounded-xl object-cover"
                       loading="lazy"
                     />
@@ -139,28 +145,28 @@ function CartDrawer() {
             <footer className="border-t border-sand-200 p-5">
               <div className="mb-4 flex items-center justify-between font-sans">
                 <p className="text-xs uppercase tracking-[0.18em] text-forest-600">
-                  {itemCount} items
+                  {$itemCount} items
                 </p>
                 <p className="text-lg font-semibold text-forest-900">
-                  {formatUSD(subtotal)}
+                  {formatUSD($subtotal)}
                 </p>
               </div>
 
-              <Link
-                to="/checkout"
+              <a
+                href="/checkout"
                 className="mb-3 block w-full rounded-full bg-forest-900 px-6 py-3 text-center font-sans text-xs font-semibold uppercase tracking-[0.2em] text-sand-50 transition hover:bg-forest-700"
                 onClick={closeCart}
               >
                 Checkout
-              </Link>
+              </a>
 
-              <Link
-                to="/cart"
+              <a
+                href="/cart"
                 className="mb-3 block w-full rounded-full border border-sand-300 px-6 py-3 text-center font-sans text-xs font-semibold uppercase tracking-[0.2em] text-forest-700 transition hover:border-fern-500 hover:text-fern-700"
                 onClick={closeCart}
               >
                 View Cart
-              </Link>
+              </a>
 
               <button
                 type="button"

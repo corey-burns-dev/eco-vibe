@@ -1,17 +1,24 @@
+import { useStore } from '@nanostores/react';
 import { ArrowLeft, Minus, Plus, Trash2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { useCart } from '../context/useCart.js';
+import { 
+  lineItems as lineItemsStore, 
+  itemCount as itemCountStore, 
+  subtotal as subtotalStore,
+  updateQuantity,
+  removeFromCart
+} from '../store/cart.js';
 import { formatUSD } from '../utils/format.js';
 
-function CartPage() {
-  const { lineItems, itemCount, subtotal, updateQuantity, removeFromCart } =
-    useCart();
+function CartView() {
+  const $lineItems = useStore(lineItemsStore);
+  const $itemCount = useStore(itemCountStore);
+  const $subtotal = useStore(subtotalStore);
 
-  const shipping = subtotal > 0 && subtotal < 75 ? 7 : 0;
-  const tax = subtotal * 0.08;
-  const total = subtotal + shipping + tax;
+  const shipping = $subtotal > 0 && $subtotal < 75 ? 7 : 0;
+  const tax = $subtotal * 0.08;
+  const total = $subtotal + shipping + tax;
 
-  if (lineItems.length === 0) {
+  if ($lineItems.length === 0) {
     return (
       <section className="px-5 py-20 md:px-10">
         <div className="mx-auto max-w-3xl rounded-3xl border border-sand-200 bg-sand-100 p-8 text-center">
@@ -24,13 +31,13 @@ function CartPage() {
           <p className="mb-7 font-sans text-forest-600">
             Browse products and add a few low-waste essentials to get started.
           </p>
-          <Link
-            to="/shop"
+          <a
+            href="/shop"
             className="inline-flex items-center gap-2 rounded-full bg-forest-900 px-6 py-3 font-sans text-xs font-semibold uppercase tracking-[0.18em] text-sand-50"
           >
             <ArrowLeft size={14} />
             Back to Shop
-          </Link>
+          </a>
         </div>
       </section>
     );
@@ -46,7 +53,7 @@ function CartPage() {
 
         <div className="grid gap-7 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="space-y-4">
-            {lineItems.map((item) => (
+            {$lineItems.map((item) => (
               <article
                 key={item.productId}
                 className="rounded-3xl border border-sand-200 bg-sand-100 p-4 md:p-5"
@@ -55,6 +62,8 @@ function CartPage() {
                   <img
                     src={item.product.image}
                     alt={item.product.name}
+                    width={150}
+                    height={150}
                     className="h-28 w-full rounded-2xl object-cover sm:h-32"
                     loading="lazy"
                   />
@@ -125,8 +134,8 @@ function CartPage() {
             </h2>
             <div className="space-y-3 font-sans text-sm text-forest-700">
               <div className="flex items-center justify-between">
-                <span>{itemCount} items</span>
-                <span>{formatUSD(subtotal)}</span>
+                <span>{$itemCount} items</span>
+                <span>{formatUSD($subtotal)}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span>Shipping</span>
@@ -143,19 +152,19 @@ function CartPage() {
               </div>
             </div>
 
-            <Link
-              to="/checkout"
+            <a
+              href="/checkout"
               className="mt-5 block rounded-full bg-forest-900 px-6 py-3 text-center font-sans text-xs font-semibold uppercase tracking-[0.2em] text-sand-50 transition hover:bg-forest-700"
             >
               Proceed to Checkout
-            </Link>
+            </a>
 
-            <Link
-              to="/shop"
+            <a
+              href="/shop"
               className="mt-3 block rounded-full border border-sand-300 px-6 py-3 text-center font-sans text-xs font-semibold uppercase tracking-[0.2em] text-forest-700 transition hover:border-fern-500 hover:text-fern-700"
             >
               Continue Shopping
-            </Link>
+            </a>
           </aside>
         </div>
       </div>
@@ -163,4 +172,4 @@ function CartPage() {
   );
 }
 
-export default CartPage;
+export default CartView;

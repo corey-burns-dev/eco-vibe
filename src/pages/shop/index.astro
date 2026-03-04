@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import ShopGrid from '../../components/ShopGrid.jsx';
+import { products } from '../../data/products.js';
+
+const categories = ['All', ...new Set(products.map((product) => product.category))];
+---
+
+<BaseLayout title="Shop | Eco Vibe" description="Curated Essentials for Low-Waste Living">
+  <Header
+    eyebrow="Shop"
+    title="Curated Essentials for Low-Waste Living"
+    description="Browse eco-forward products by category and build a routine that reduces waste without sacrificing style or function."
+    image="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1400&q=80"
+    imageAlt="Sustainable clothing and accessories"
+  />
+
+  <section className="px-5 py-14 md:px-10 md:py-16">
+    <ShopGrid categories={categories} client:load />
+  </section>
+</BaseLayout>

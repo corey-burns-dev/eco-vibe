@@ -1,7 +1,12 @@
+import { useStore } from '@nanostores/react';
 import { ArrowLeft, CheckCircle2, Tag, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useCart } from '../context/useCart.js';
+import { 
+  lineItems as lineItemsStore, 
+  itemCount as itemCountStore, 
+  subtotal as subtotalStore,
+  clearCart
+} from '../store/cart.js';
 import { formatUSD } from '../utils/format.js';
 
 const initialForm = {
@@ -36,109 +41,56 @@ const promoCodes = {
 
 function validateField(name, value) {
   const trimmed = String(value ?? '').trim();
-
   if (name === 'email') {
-    if (!trimmed) {
-      return 'Email is required.';
-    }
-
-    if (!/^\S+@\S+\.\S+$/.test(trimmed)) {
-      return 'Enter a valid email address.';
-    }
-
+    if (!trimmed) return 'Email is required.';
+    if (!/^\S+@\S+\.\S+$/.test(trimmed)) return 'Enter a valid email address.';
     return '';
   }
-
   if (name === 'firstName') {
-    if (!trimmed) {
-      return 'First name is required.';
-    }
-
-    if (trimmed.length < 2) {
-      return 'First name is too short.';
-    }
-
+    if (!trimmed) return 'First name is required.';
+    if (trimmed.length < 2) return 'First name is too short.';
     return '';
   }
-
   if (name === 'lastName') {
-    if (!trimmed) {
-      return 'Last name is required.';
-    }
-
-    if (trimmed.length < 2) {
-      return 'Last name is too short.';
-    }
-
+    if (!trimmed) return 'Last name is required.';
+    if (trimmed.length < 2) return 'Last name is too short.';
     return '';
   }
-
   if (name === 'address') {
-    if (!trimmed) {
-      return 'Address is required.';
-    }
-
-    if (trimmed.length < 5) {
-      return 'Enter a fuller street address.';
-    }
-
+    if (!trimmed) return 'Address is required.';
+    if (trimmed.length < 5) return 'Enter a fuller street address.';
     return '';
   }
-
   if (name === 'city') {
-    if (!trimmed) {
-      return 'City is required.';
-    }
-
+    if (!trimmed) return 'City is required.';
     return '';
   }
-
   if (name === 'state') {
-    if (!trimmed) {
-      return 'State is required.';
-    }
-
-    if (trimmed.length < 2) {
-      return 'Use a 2-letter state code.';
-    }
-
+    if (!trimmed) return 'State is required.';
+    if (trimmed.length < 2) return 'Use a 2-letter state code.';
     return '';
   }
-
   if (name === 'zip') {
-    if (!trimmed) {
-      return 'ZIP code is required.';
-    }
-
-    if (!/^\d{5}(?:-\d{4})?$/.test(trimmed)) {
-      return 'Use ZIP format 12345 or 12345-6789.';
-    }
-
+    if (!trimmed) return 'ZIP code is required.';
+    if (!/^\d{5}(?:-\d{4})?$/.test(trimmed)) return 'Use ZIP format 12345 or 12345-6789.';
     return '';
   }
-
   return '';
 }
 
 function validateForm(form) {
-  const fields = [
-    'email',
-    'firstName',
-    'lastName',
-    'address',
-    'city',
-    'state',
-    'zip',
-  ];
-
+  const fields = ['email', 'firstName', 'lastName', 'address', 'city', 'state', 'zip'];
   return fields.reduce((result, field) => {
     result[field] = validateField(field, form[field]);
     return result;
   }, {});
 }
 
-function CheckoutPage() {
-  const { lineItems, itemCount, subtotal, clearCart } = useCart();
+function CheckoutView() {
+  const $lineItems = useStore(lineItemsStore);
+  const $itemCount = useStore(itemCountStore);
+  const $subtotal = useStore(subtotalStore);
+
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
@@ -148,39 +100,24 @@ function CheckoutPage() {
   const [appliedPromo, setAppliedPromo] = useState(null);
 
   const discount = useMemo(() => {
-    if (!appliedPromo) {
-      return 0;
-    }
-
-    if (appliedPromo.type === 'percent') {
-      return subtotal * appliedPromo.value;
-    }
-
+    if (!appliedPromo) return 0;
+    if (appliedPromo.type === 'percent') return $subtotal * appliedPromo.value;
     return 0;
-  }, [appliedPromo, subtotal]);
+  }, [appliedPromo, $subtotal]);
 
   const shipping = useMemo(() => {
-    if (itemCount === 0) {
-      return 0;
-    }
-
-    const defaultShipping =
-      form.shipping === 'express' ? 15 : subtotal >= 75 ? 0 : 7;
-
-    if (appliedPromo?.type === 'shipping' && form.shipping === 'standard') {
-      return 0;
-    }
-
+    if ($itemCount === 0) return 0;
+    const defaultShipping = form.shipping === 'express' ? 15 : $subtotal >= 75 ? 0 : 7;
+    if (appliedPromo?.type === 'shipping' && form.shipping === 'standard') return 0;
     return defaultShipping;
-  }, [appliedPromo, form.shipping, itemCount, subtotal]);
+  }, [appliedPromo, form.shipping, $itemCount, $subtotal]);
 
-  const taxableSubtotal = Math.max(subtotal - discount, 0);
+  const taxableSubtotal = Math.max($subtotal - discount, 0);
   const tax = taxableSubtotal * 0.08;
   const total = taxableSubtotal + shipping + tax;
 
   function setField(name, value) {
     setForm((current) => ({ ...current, [name]: value }));
-
     if (touched[name]) {
       setErrors((current) => ({
         ...current,
@@ -196,40 +133,25 @@ function CheckoutPage() {
 
   function handleBlur(event) {
     const { name, value } = event.target;
-
-    setTouched((current) => ({
-      ...current,
-      [name]: true,
-    }));
-
-    setErrors((current) => ({
-      ...current,
-      [name]: validateField(name, value),
-    }));
+    setTouched((current) => ({ ...current, [name]: true }));
+    setErrors((current) => ({ ...current, [name]: validateField(name, value) }));
   }
 
   function applyPromo() {
     const code = promoInput.trim().toUpperCase();
-
     if (!code) {
       setPromoError('Enter a promo code.');
       return;
     }
-
     const promo = promoCodes[code];
-
     if (!promo) {
       setPromoError('Promo code not recognized.');
       return;
     }
-
-    if (promo.minSubtotal && subtotal < promo.minSubtotal) {
-      setPromoError(
-        `Code requires at least ${formatUSD(promo.minSubtotal)} subtotal.`,
-      );
+    if (promo.minSubtotal && $subtotal < promo.minSubtotal) {
+      setPromoError(`Code requires at least ${formatUSD(promo.minSubtotal)} subtotal.`);
       return;
     }
-
     setAppliedPromo({ code, ...promo });
     setPromoInput('');
     setPromoError('');
@@ -242,7 +164,6 @@ function CheckoutPage() {
 
   function inputClass(name) {
     const hasError = touched[name] && errors[name];
-
     return `w-full rounded-xl border bg-sand-50 px-3 py-2.5 font-sans text-sm text-forest-800 outline-none focus:border-fern-500 ${
       hasError ? 'border-clay-500' : 'border-sand-300'
     }`;
@@ -250,45 +171,26 @@ function CheckoutPage() {
 
   function handleSubmit(event) {
     event.preventDefault();
-
     const nextErrors = validateForm(form);
     const hasErrors = Object.values(nextErrors).some(Boolean);
-
     setErrors(nextErrors);
     setTouched({
-      email: true,
-      firstName: true,
-      lastName: true,
-      address: true,
-      city: true,
-      state: true,
-      zip: true,
+      email: true, firstName: true, lastName: true, address: true, city: true, state: true, zip: true,
     });
-
-    if (hasErrors) {
-      return;
-    }
+    if (hasErrors) return;
 
     const orderId = `EV-${Date.now().toString().slice(-6)}`;
-
     setSubmittedOrder({
       id: orderId,
       email: form.email,
       firstName: form.firstName,
-      itemCount,
+      itemCount: $itemCount,
       total,
       placedAt: new Date().toLocaleString(),
       promoCode: appliedPromo?.code ?? null,
       discount,
     });
-
     clearCart();
-    setForm(initialForm);
-    setErrors({});
-    setTouched({});
-    setAppliedPromo(null);
-    setPromoInput('');
-    setPromoError('');
   }
 
   if (submittedOrder) {
@@ -318,19 +220,19 @@ function CheckoutPage() {
             ) : null}
             <p>Total: {formatUSD(submittedOrder.total)}</p>
           </div>
-          <Link
-            to="/shop"
+          <a
+            href="/shop"
             className="inline-flex items-center gap-2 rounded-full bg-forest-900 px-6 py-3 font-sans text-xs font-semibold uppercase tracking-[0.18em] text-sand-50"
           >
             <ArrowLeft size={14} />
             Continue Shopping
-          </Link>
+          </a>
         </div>
       </section>
     );
   }
 
-  if (lineItems.length === 0) {
+  if ($lineItems.length === 0) {
     return (
       <section className="px-5 py-20 md:px-10">
         <div className="mx-auto max-w-3xl rounded-3xl border border-sand-200 bg-sand-100 p-8 text-center">
@@ -343,13 +245,13 @@ function CheckoutPage() {
           <p className="mb-7 font-sans text-forest-600">
             Add products before starting checkout.
           </p>
-          <Link
-            to="/shop"
+          <a
+            href="/shop"
             className="inline-flex items-center gap-2 rounded-full bg-forest-900 px-6 py-3 font-sans text-xs font-semibold uppercase tracking-[0.18em] text-sand-50"
           >
             <ArrowLeft size={14} />
             Back to Shop
-          </Link>
+          </a>
         </div>
       </section>
     );
@@ -535,7 +437,7 @@ function CheckoutPage() {
                     Standard (3-5 days)
                   </span>
                   <span>
-                    {subtotal >= 75 || appliedPromo?.type === 'shipping'
+                    {$subtotal >= 75 || appliedPromo?.type === 'shipping'
                       ? 'Free'
                       : formatUSD(7)}
                   </span>
@@ -600,7 +502,7 @@ function CheckoutPage() {
               Order Summary
             </h2>
             <div className="mb-5 space-y-3">
-              {lineItems.map((item) => (
+              {$lineItems.map((item) => (
                 <div
                   key={item.productId}
                   className="flex items-center gap-3 rounded-2xl border border-sand-300 bg-sand-50 p-3"
@@ -608,6 +510,8 @@ function CheckoutPage() {
                   <img
                     src={item.product.image}
                     alt={item.product.name}
+                    width={64}
+                    height={64}
                     className="h-16 w-16 rounded-xl object-cover"
                     loading="lazy"
                   />
@@ -680,7 +584,7 @@ function CheckoutPage() {
             <div className="space-y-3 font-sans text-sm text-forest-700">
               <div className="flex items-center justify-between">
                 <span>Subtotal</span>
-                <span>{formatUSD(subtotal)}</span>
+                <span>{formatUSD($subtotal)}</span>
               </div>
               {discount > 0 ? (
                 <div className="flex items-center justify-between text-fern-700">
@@ -703,12 +607,12 @@ function CheckoutPage() {
               </div>
             </div>
 
-            <Link
-              to="/cart"
+            <a
+              href="/cart"
               className="mt-5 block rounded-full border border-sand-300 px-6 py-3 text-center font-sans text-xs font-semibold uppercase tracking-[0.2em] text-forest-700 transition hover:border-fern-500 hover:text-fern-700"
             >
               Back to Cart
-            </Link>
+            </a>
           </aside>
         </div>
       </div>
@@ -716,4 +620,4 @@ function CheckoutPage() {
   );
 }
 
-export default CheckoutPage;
+export default CheckoutView;
