@@ -28,12 +28,14 @@ Ensure you have [Bun](https://bun.sh/) installed on your system.
 ### Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/[your-username]/eco-vibe.git
    cd eco-vibe
    ```
 
 2. Install dependencies:
+
    ```bash
    bun install
    ```

@@ -1,8 +1,7 @@
 {
   "name": "eco-vibe",
-  "private": true,
   "version": "0.0.0",
-  "packageManager": "bun@1.3.9",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "astro dev",
@@ -10,8 +9,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "check": "astro check",
     "lint": "oxlint",
-    "lint:fix": "biome check --write .",
+    "lint:fix": "oxlint --fix . && oxfmt",
     "format": "oxfmt",
     "prepare": "husky"
   },
@@ -26,22 +26,25 @@
     "react-dom": "^19.2.4"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.7",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "astro": "^6.0.1",
     "autoprefixer": "^10.4.27",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.3.3",
+    "oxfmt": "^0.37.0",
+    "oxlint": "^1.52.0",
     "postcss": "^8.5.8",
     "tailwindcss": "^4.2.1",
-    "vite": "^7.3.1",
-    "oxlint": "^1.52.0",
-    "oxfmt": "^0.37.0",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.3.3"
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "oxlint --fix",
       "oxfmt"
     ]
-  }
+  },
+  "packageManager": "bun@1.3.9"
 }

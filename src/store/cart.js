@@ -1,8 +1,8 @@
-import { persistentAtom } from '@nanostores/persistent';
-import { atom, computed } from 'nanostores';
-import { products } from '../data/products.js';
+import { persistentAtom } from "@nanostores/persistent";
+import { atom, computed } from "nanostores";
+import { products } from "../data/products.js";
 
-export const cart = persistentAtom('eco-vibe-cart-v1', [], {
+export const cart = persistentAtom("eco-vibe-cart-v1", [], {
   encode: JSON.stringify,
   decode: JSON.parse,
 });
@@ -41,10 +41,7 @@ export function addToCart(productId, quantity = 1) {
   const existing = current.find((item) => item.productId === resolvedId);
 
   if (!existing) {
-    cart.set([
-      ...current,
-      { productId: resolvedId, quantity: resolvedQuantity },
-    ]);
+    cart.set([...current, { productId: resolvedId, quantity: resolvedQuantity }]);
   } else {
     cart.set(
       current.map((item) =>
@@ -68,9 +65,7 @@ export function updateQuantity(productId, quantity) {
   const current = cart.get();
   cart.set(
     current.map((item) =>
-      item.productId === resolvedId
-        ? { ...item, quantity: resolvedQuantity }
-        : item,
+      item.productId === resolvedId ? { ...item, quantity: resolvedQuantity } : item,
     ),
   );
 }

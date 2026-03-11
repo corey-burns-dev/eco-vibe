@@ -1,5 +1,5 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 import CartDrawer from '../components/CartDrawer.jsx';
 import Footer from '../components/Footer.astro';
 import Navigation from '../components/Navigation.astro';
@@ -28,7 +28,7 @@ const {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body>
     <Navigation transition:persist />

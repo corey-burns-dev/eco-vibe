@@ -1,7 +1,6 @@
-import { useStore } from '@nanostores/react';
-import { Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react';
+import { useStore } from "@nanostores/react";
+import { Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
 import {
-  cart,
   clearCart,
   closeCart,
   isCartOpen,
@@ -10,8 +9,8 @@ import {
   removeFromCart,
   subtotal as subtotalStore,
   updateQuantity,
-} from '../store/cart.js';
-import { formatUSD } from '../utils/format.js';
+} from "../store/cart.js";
+import { formatUSD } from "../utils/format.js";
 
 function CartDrawer() {
   const $isCartOpen = useStore(isCartOpen);
@@ -21,19 +20,19 @@ function CartDrawer() {
 
   return (
     <div
-      className={`fixed inset-0 z-[60] transition ${$isCartOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
+      className={`fixed inset-0 z-[60] transition ${$isCartOpen ? "pointer-events-auto" : "pointer-events-none"}`}
       aria-hidden={!$isCartOpen}
     >
       <button
         type="button"
-        className={`absolute inset-0 bg-forest-900/45 transition ${$isCartOpen ? 'opacity-100' : 'opacity-0'}`}
+        className={`absolute inset-0 bg-forest-900/45 transition ${$isCartOpen ? "opacity-100" : "opacity-0"}`}
         aria-label="Close cart"
         onClick={closeCart}
       />
 
       <aside
         className={`absolute right-0 top-0 flex h-full w-full max-w-md flex-col border-l border-sand-200 bg-sand-50 shadow-2xl transition-transform duration-300 ${
-          $isCartOpen ? 'translate-x-0' : 'translate-x-full'
+          $isCartOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <header className="flex items-center justify-between border-b border-sand-200 px-5 py-4">
@@ -53,9 +52,7 @@ function CartDrawer() {
 
         {$lineItems.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
-            <p className="mb-3 text-4xl font-light text-forest-900">
-              Your bag is empty
-            </p>
+            <p className="mb-3 text-4xl font-light text-forest-900">Your bag is empty</p>
             <p className="mb-6 font-sans text-sm text-forest-600">
               Add a few low-waste essentials to get started.
             </p>
@@ -103,9 +100,7 @@ function CartDrawer() {
                         type="button"
                         className="rounded-full p-1.5 text-forest-700 transition hover:bg-sand-200"
                         aria-label={`Decrease ${item.product.name} quantity`}
-                        onClick={() =>
-                          updateQuantity(item.productId, item.quantity - 1)
-                        }
+                        onClick={() => updateQuantity(item.productId, item.quantity - 1)}
                       >
                         <Minus size={14} />
                       </button>
@@ -116,9 +111,7 @@ function CartDrawer() {
                         type="button"
                         className="rounded-full p-1.5 text-forest-700 transition hover:bg-sand-200"
                         aria-label={`Increase ${item.product.name} quantity`}
-                        onClick={() =>
-                          updateQuantity(item.productId, item.quantity + 1)
-                        }
+                        onClick={() => updateQuantity(item.productId, item.quantity + 1)}
                       >
                         <Plus size={14} />
                       </button>
@@ -147,9 +140,7 @@ function CartDrawer() {
                 <p className="text-xs uppercase tracking-[0.18em] text-forest-600">
                   {$itemCount} items
                 </p>
-                <p className="text-lg font-semibold text-forest-900">
-                  {formatUSD($subtotal)}
-                </p>
+                <p className="text-lg font-semibold text-forest-900">{formatUSD($subtotal)}</p>
               </div>
 
               <a

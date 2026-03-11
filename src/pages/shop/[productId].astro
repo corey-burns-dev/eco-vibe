@@ -1,5 +1,5 @@
 ---
-import { ArrowLeft, Minus, Plus } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import ProductCard from '../../components/ProductCard.jsx';
 import ProductDetailActions from '../../components/ProductDetailActions.jsx';
 import { products } from '../../data/products.js';
@@ -56,7 +56,7 @@ const benefits = benefitsByCategory[product.category] ?? [
 
 const relatedProducts = products
   .filter((entry) => entry.id !== product.id)
-  .sort(
+  .toSorted(
     (a, b) =>
       Number(a.category !== product.category) -
       Number(b.category !== product.category),
@@ -107,8 +107,8 @@ const relatedProducts = products
               Why you will love it
             </h2>
             <ul class="space-y-2 font-sans text-sm text-forest-700">
-              {benefits.map((item) => (
-                <li key={item}>{item}</li>
+              {benefits.map((item: string) => (
+                <li>{item}</li>
               ))}
             </ul>
           </div>

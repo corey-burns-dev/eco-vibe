@@ -1,15 +1,12 @@
-import { ArrowUpRight } from 'lucide-react';
-import { useMemo, useState } from 'react';
-import { journalPosts } from '../data/journal.js';
+import { ArrowUpRight } from "lucide-react";
+import { useMemo, useState } from "react";
+import { journalPosts } from "../data/journal.js";
 
 function JournalGrid({ topics }) {
-  const [activeTopic, setActiveTopic] = useState('All');
+  const [activeTopic, setActiveTopic] = useState("All");
 
   const visiblePosts = useMemo(
-    () =>
-      journalPosts.filter(
-        (post) => activeTopic === 'All' || post.topic === activeTopic,
-      ),
+    () => journalPosts.filter((post) => activeTopic === "All" || post.topic === activeTopic),
     [activeTopic],
   );
 
@@ -23,8 +20,8 @@ function JournalGrid({ topics }) {
             onClick={() => setActiveTopic(topic)}
             className={`rounded-full px-4 py-2 font-sans text-[11px] font-semibold uppercase tracking-[0.18em] transition ${
               topic === activeTopic
-                ? 'bg-forest-900 text-sand-50'
-                : 'border border-sand-300 bg-sand-100 text-forest-700 hover:border-fern-500 hover:text-fern-700'
+                ? "bg-forest-900 text-sand-50"
+                : "border border-sand-300 bg-sand-100 text-forest-700 hover:border-fern-500 hover:text-fern-700"
             }`}
           >
             {topic}

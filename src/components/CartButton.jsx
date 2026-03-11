@@ -1,6 +1,6 @@
-import { useStore } from '@nanostores/react';
-import { ShoppingBag } from 'lucide-react';
-import { itemCount as itemCountStore, openCart } from '../store/cart.js';
+import { useStore } from "@nanostores/react";
+import { ShoppingBag } from "lucide-react";
+import { itemCount as itemCountStore, openCart } from "../store/cart.js";
 
 function CartButton() {
   const $itemCount = useStore(itemCountStore);

@@ -1,6 +1,6 @@
-import { Minus, Plus } from 'lucide-react';
-import { useState } from 'react';
-import { addToCart, openCart } from '../store/cart.js';
+import { Minus, Plus } from "lucide-react";
+import { useState } from "react";
+import { addToCart, openCart } from "../store/cart.js";
 
 function ProductDetailActions({ product }) {
   const [quantity, setQuantity] = useState(1);

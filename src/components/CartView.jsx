@@ -1,13 +1,13 @@
-import { useStore } from '@nanostores/react';
-import { ArrowLeft, Minus, Plus, Trash2 } from 'lucide-react';
+import { useStore } from "@nanostores/react";
+import { ArrowLeft, Minus, Plus, Trash2 } from "lucide-react";
 import {
   itemCount as itemCountStore,
   lineItems as lineItemsStore,
   removeFromCart,
   subtotal as subtotalStore,
   updateQuantity,
-} from '../store/cart.js';
-import { formatUSD } from '../utils/format.js';
+} from "../store/cart.js";
+import { formatUSD } from "../utils/format.js";
 
 function CartView() {
   const $lineItems = useStore(lineItemsStore);
@@ -25,9 +25,7 @@ function CartView() {
           <p className="mb-3 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-clay-700">
             Cart
           </p>
-          <h1 className="mb-4 text-5xl font-light text-forest-900">
-            Your bag is empty.
-          </h1>
+          <h1 className="mb-4 text-5xl font-light text-forest-900">Your bag is empty.</h1>
           <p className="mb-7 font-sans text-forest-600">
             Browse products and add a few low-waste essentials to get started.
           </p>
@@ -92,9 +90,7 @@ function CartView() {
                           type="button"
                           className="rounded-full p-1.5 text-forest-700 transition hover:bg-sand-200"
                           aria-label={`Decrease ${item.product.name} quantity`}
-                          onClick={() =>
-                            updateQuantity(item.productId, item.quantity - 1)
-                          }
+                          onClick={() => updateQuantity(item.productId, item.quantity - 1)}
                         >
                           <Minus size={14} />
                         </button>
@@ -105,9 +101,7 @@ function CartView() {
                           type="button"
                           className="rounded-full p-1.5 text-forest-700 transition hover:bg-sand-200"
                           aria-label={`Increase ${item.product.name} quantity`}
-                          onClick={() =>
-                            updateQuantity(item.productId, item.quantity + 1)
-                          }
+                          onClick={() => updateQuantity(item.productId, item.quantity + 1)}
                         >
                           <Plus size={14} />
                         </button>
@@ -129,9 +123,7 @@ function CartView() {
           </div>
 
           <aside className="h-fit rounded-3xl border border-sand-200 bg-sand-100 p-5">
-            <h2 className="mb-4 text-4xl font-light text-forest-900">
-              Order Summary
-            </h2>
+            <h2 className="mb-4 text-4xl font-light text-forest-900">Order Summary</h2>
             <div className="space-y-3 font-sans text-sm text-forest-700">
               <div className="flex items-center justify-between">
                 <span>{$itemCount} items</span>
@@ -139,7 +131,7 @@ function CartView() {
               </div>
               <div className="flex items-center justify-between">
                 <span>Shipping</span>
-                <span>{shipping === 0 ? 'Free' : formatUSD(shipping)}</span>
+                <span>{shipping === 0 ? "Free" : formatUSD(shipping)}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span>Estimated tax</span>
