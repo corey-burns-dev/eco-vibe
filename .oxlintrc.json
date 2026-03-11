@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["eslint", "oxc", "unicorn", "react"],
+  "plugins": ["eslint", "oxc", "react", "unicorn", "typescript"],
   "categories": {
     "correctness": "warn",
     "suspicious": "warn",
@@ -9,8 +9,7 @@
   "rules": {
     "react-in-jsx-scope": "off",
     "eslint/no-shadow": "off",
-    "eslint/no-await-in-loop": "off",
-    "oxc/no-map-spread": "off"
+    "eslint/no-await-in-loop": "off"
   },
   "env": {
     "builtin": true
