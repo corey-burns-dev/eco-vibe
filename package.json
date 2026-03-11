@@ -7,7 +7,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "deploy": "npx wrangler deploy",
+    "deploy": "bun run build && npx wrangler deploy",
     "deploy:dry-run": "npx wrangler deploy --dry-run",
     "preview": "astro preview",
     "astro": "astro",
